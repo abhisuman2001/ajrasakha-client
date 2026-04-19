@@ -21,7 +21,7 @@ self.addEventListener('push', function (event) {
     vibrate: [100, 50, 100],
     badge: '/assets/favicon-32x32.png'
   };
-
+  console.log('Push Options:', options);
   event.waitUntil(self.registration.showNotification(title, options));
 });
 /*self.addEventListener('push', function (event) {
