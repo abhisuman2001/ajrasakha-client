@@ -96,11 +96,15 @@ router.post('/notifications', async (req, res) => {
         const payload = JSON.stringify({
           title: 'Your answer is ready!',
           body: `Your question "${displayQuestion}" was recently answered.`,
-          icon: '/assets/favicon.ico',
+          icon: '/assets/annam-logo.png',
           url: `${clientDomain}/c/${conversationId}`,
         });
 
-        await webpush.sendNotification(sub, payload);
+        const pushResponse = await webpush.sendNotification(sub, payload);
+        logger.info('Push sent successfully', {
+          statusCode: pushResponse.statusCode,
+          endpoint: sub.endpoint,
+        });
         successCount++;
       } catch (err) {
         failureCount++;

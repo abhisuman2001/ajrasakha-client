@@ -32,6 +32,11 @@ export default function useWebPush() {
         
         await navigator.serviceWorker.register('/sw.js');
         const registration = await navigator.serviceWorker.ready;
+        console.log('Service Worker is ready:', registration);
+        
+        // Force update to ensure we have the latest sw.js code
+        await registration.update();
+        console.log('Service Worker updated');
 
         // Ask for permission if not decided
         if (Notification.permission === 'default') {

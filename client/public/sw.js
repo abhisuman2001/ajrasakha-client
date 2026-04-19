@@ -1,19 +1,25 @@
 self.addEventListener('push', function (event) {
-  console.log('🔥 PUSH RECEIVED IN PROD');
+  console.log('🔥 PUSH RECEIVED');
   let data = {};
   if (event.data) {
     try {
       data = event.data.json();
+      console.log('Push Data:', data);
     } catch (e) {
+      console.warn('Push data is not JSON:', event.data.text());
       data = { body: event.data.text() };
     }
+  } else {
+    console.warn('Push event has no data');
   }
 
-  const title = data.title || 'Notification';
+  const title = data.title || 'Ajrasakha Update';
   const options = {
-    body: data.body || 'You have a new update.',
-    icon: data.icon || '/assets/favicon.ico',
+    body: data.body || 'Your answer is ready!',
+    icon: data.icon || '/assets/annam-logo.png',
     data: { url: data.url || '/' },
+    vibrate: [100, 50, 100],
+    badge: '/assets/favicon-32x32.png'
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
